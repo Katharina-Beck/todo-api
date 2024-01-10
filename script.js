@@ -1,8 +1,8 @@
 const apiUrl = "http://localhost:4730/todos";
 const btnAddTodo = document.querySelector("#btn-add-todo");
-const todoList = document.querySelector("#btn-add-todo");
+const todosList = document.querySelector("#todos-list");
 
-const todo = [];
+const todos = [];
 
 loadTodos();
 
@@ -11,7 +11,7 @@ btnAddTodo.addEventListener("click", addNewTodo);
 todosList.addEventListener("change", updateTodo);
 
 function loadTodos() {
-  fetch(url)
+  fetch(apiUrl)
     .then((response) => response.json())
     .then((todosFromApi) => {
       todos.push(...todosFromApi);
@@ -56,9 +56,60 @@ function addNewTodo(event) {
   renderTodos();
 }
 
+async function createTodo(newTodo) {
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      body: JSON.stringify(newTodo),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    return response.json();
+  } catch (error) {
+    throw new Error("Error creating new todo:", error);
+  }
+}
+
 function updateTodo(event) {
   const updatedTodo = event.target.todo;
   const todoId = updatedTodo.id;
 
   updatedTodo.done = !updatedTodo.done;
+}
+
+toggleTodoStatus(todoId, !updatedTodo.done);
+//   .then(() => {
+//     // Refresh the todos from the API and update the UI
+//     loadTodos();
+//   })
+//   .catch((error) => {
+//     console.error("Error updating todo status:", error);
+//   });
+
+async function toggleTodoStatus(todoId, newStatus) {
+  try {
+    const response = await fetch(`${apiUrl}/${todoId}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        completed: newStatus,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    return response.json();
+  } catch (error) {
+    throw new Error("Error updating todo status:", error);
+  }
 }
