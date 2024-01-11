@@ -19,11 +19,6 @@
       "description": "Learn Vue.js",
       "done": false,
       "id": 4
-    },
-    {
-      "description": "Learn Testing",
-      "done": false,
-      "id": 5
     }
   ]
 }

@@ -10,18 +10,26 @@
 
 <body>
     <section class="container">
-        <header class="heading">
-            <h1 class="heading-title">Just do it!</h1>
+        <header id="heading">
+            <div id="item1">
+                <h1 class="heading-title">Just do it!</h1>
+            </div>
         </header>
         <main>
-            <form id="new-todo-wrapper">
-                <label for="new-todo" id="form-lable">Todos</label>
+            <form id="item2">
+                <label for="new-todo" id="form-lable"></label>
                 <input type="text" name="new-todo" id="new-todo" class="form-input" />
+
+                <br>
                 <button id="btn-add-todo" type="button">Add Todo</button>
+                <br>
                 <button id="btn-delete-todo" type="button">Delete Todo</button>
+
             </form>
-            <div>
-                <li id="todos-list"></li>
+            <div id="todo-content">
+                <span id="item3">
+                    <ul id="todos-list"></ul>
+                </span>
             </div>
         </main>
     </section>
