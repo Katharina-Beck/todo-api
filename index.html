@@ -9,18 +9,22 @@
 </head>
 
 <body>
-    <header>
-        <h1>Todo App</h1>
-    </header>
-    <main>
-        <form id="new-todo-wrapper">
-            <label for="new-todo">List Todo</label>
-            <input type="text" name="new-todo" id="new-todo" />
-            <button id="btn-add-todo">Add Todo</button>
-        </form>
-        <ul id="todos-list"></ul>
-    </main>
-    <script src="script.js" type="module"></script>
+    <section class="container">
+        <header class="heading">
+            <h1 class="heading-title">Todo App</h1>
+        </header>
+        <main>
+            <form id="new-todo-wrapper">
+                <label for="new-todo" id="form-lable">List Todo</label>
+                <input type="text" name="new-todo" id="new-todo" />
+                <button id="btn-add-todo" type="button">Add Todo</button>
+            </form>
+            <div>
+                <ul id="todos-list"></ul>
+            </div>
+        </main>
+    </section>
+    <script src="javascript/script.js" type="module"></script>
 </body>
 
 </html>

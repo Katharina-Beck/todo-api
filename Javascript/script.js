@@ -1,10 +1,13 @@
 const apiUrl = "http://localhost:4730/todos";
 const btnAddTodo = document.querySelector("#btn-add-todo");
 const todosList = document.querySelector("#todos-list");
+const btnDeleteTodo = document.querySelector("#btn-delete-todo");
 
 const todos = [];
 
 loadTodos();
+
+btnDeleteTodo.addEventListener("click", removeTodo);
 
 btnAddTodo.addEventListener("click", addNewTodo);
 
@@ -34,6 +37,7 @@ function renderTodos() {
 
     const description = document.createElement("label");
     description.htmlFor = checkbox.id;
+    console.log(todo.description);
     description.innerText = todo.description;
 
     listElement.append(checkbox, description);
@@ -54,6 +58,7 @@ function addNewTodo(event) {
 
   todos.push(newTodo);
   renderTodos();
+  createTodo(newTodo);
 }
 
 async function createTodo(newTodo) {
@@ -69,6 +74,7 @@ async function createTodo(newTodo) {
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
+    console.log(response);
 
     return response.json();
   } catch (error) {
@@ -77,27 +83,17 @@ async function createTodo(newTodo) {
 }
 
 function updateTodo(event) {
-  const updatedTodo = event.target.todo;
-  const todoId = updatedTodo.id;
-
-  updatedTodo.done = !updatedTodo.done;
+  event.preventDefault();
+  toggleTodoStatus(event.srcElement.todoObj);
 }
 
-toggleTodoStatus(todoId, !updatedTodo.done);
-//   .then(() => {
-//     // Refresh the todos from the API and update the UI
-//     loadTodos();
-//   })
-//   .catch((error) => {
-//     console.error("Error updating todo status:", error);
-//   });
-
-async function toggleTodoStatus(todoId, newStatus) {
+async function toggleTodoStatus(todoObj) {
   try {
-    const response = await fetch(`${apiUrl}/${todoId}`, {
+    const response = await fetch(`${apiUrl}/${todoObj.id}`, {
       method: "PUT",
       body: JSON.stringify({
-        completed: newStatus,
+        description: todoObj.description,
+        done: !todoObj.done,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -112,4 +108,28 @@ async function toggleTodoStatus(todoId, newStatus) {
   } catch (error) {
     throw new Error("Error updating todo status:", error);
   }
+}
+
+function removeTodo(event) {
+  event.preventDefault();
+  todos.forEach(async (element) => {
+    if (element.done) {
+      try {
+        const response = await fetch(`${apiUrl}/${element.id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        return response.json();
+      } catch (error) {
+        throw new Error("Error updating todo status:", error);
+      }
+    }
+  });
 }
