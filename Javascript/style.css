@@ -143,19 +143,20 @@ body {
   outline: 0;
 }
 
-#todo-content {
+/* #todo-content {
   list-style-image: none;
-}
+} */
 
-#todo-list {
+#todos-list {
   display: grid;
   text-align: left;
+  list-style: none;
 }
-#todo-list ul {
+/* #todo-list ul {
   position: relative;
   padding: 0.5rem;
-}
-#todo-list ul:hover {
+} */
+#todos-list ul:hover {
   text-decoration: line-through wavy #24bffb;
 }
 
@@ -174,6 +175,7 @@ body {
   margin: 10px;
 }
 
-.ul #todo-list {
+/* #todos-list {
   list-style: none;
-}
+  text-align: left;
+} */
